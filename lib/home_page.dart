@@ -18,6 +18,8 @@ class HomePage extends StatefulWidget
 class _HomePageState extends State<HomePage>
 {
   List<String> values = ["poire", "pêche", "cerise", "framboise"];
+  String _selected = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,18 +27,27 @@ class _HomePageState extends State<HomePage>
         title: Text(widget.title),
         actions: [
           PopupMenuButton<String>(
-              itemBuilder: (context) {
-
-                return [];
-
-              }
+            onSelected: (newValue)
+              {
+                setState(() {
+                  _selected = newValue;
+                });
+              },
+            itemBuilder: (context) {
+              return values.map((animal) {return PopupMenuItem<String>(
+                  value : animal,
+                  child: Text(animal));}
+              ).toList();
+            }
           )
         ],
       ),
 
       backgroundColor: Colors.lightGreenAccent,
 
-      body: Center()
+      body: Center(
+        child: Text(_selected),
+      )
     );
   }
 
