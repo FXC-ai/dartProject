@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage>
   List<String> values = ["poire", "pêche", "cerise", "framboise"];
   String _selected = "";
 
-  List<Animal> _animaux = [
+  final List<Animal> _animaux = [
     Animal("chat", "cat"),
     Animal("baleine", "whale"),
     Animal("chien", "dog"),
@@ -49,9 +49,9 @@ class _HomePageState extends State<HomePage>
                 });
               },
             itemBuilder: (context) {
-              return values.map((animal) {return PopupMenuItem<String>(
-                  value : animal,
-                  child: Text(animal));}
+              return values.map((ani) {return PopupMenuItem<String>(
+                  value : ani,
+                  child: Text(ani));}
               ).toList();
             }
           )
@@ -65,20 +65,9 @@ class _HomePageState extends State<HomePage>
           children : [
             Text(_selected),
             SegmentedButton<Animal>(
-              segments: [
-                ButtonSegment<Animal>(
-                    value: _animaux[0],
-                    icon: const Icon(Icons.icecream)
-                ),
-                ButtonSegment(
-                    value: _animaux[1],
-                    icon: const Icon(Icons.face)
-                ),
-                ButtonSegment(
-                    value: _animaux[2],
-                    icon: const Icon(Icons.leaderboard)
-                )
-              ],
+              segments: _animaux.map((animal){
+                return ButtonSegment<Animal>(value: animal, label: Text(animal.name));
+              }).toList(),
               selected: _selection,
               onSelectionChanged: (newSet){
                 setState(() {
@@ -86,6 +75,7 @@ class _HomePageState extends State<HomePage>
                 });
               },
             ),
+            Text("animal : ${_selection.first.name}")
           ]
         ),
       )
@@ -97,6 +87,6 @@ class Animal {
   String name;
   String icon;
 
-  Animal(this.name, this.icon)
+  Animal(this.name, this.icon);
 
 }
