@@ -96,7 +96,6 @@ class _HomePageState extends State<HomePage>
                     )
                   ),
                 ),
-                const SizedBox(height: 98),
                 TextField(
                   focusNode: _forButton,
                   controller: _controller,
