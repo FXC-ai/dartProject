@@ -23,6 +23,24 @@ class _HomePageState extends State<HomePage>
   double _max = 6;
   double _current = 3;
 
+  double _min_nuit_h = 0;
+  double _max_nuit_h = 14;
+  double _current_nuit_h = 7;
+
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller = TextEditingController(text : "A noter que...");
+  }
+
+  @override
+  void dispose () {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,45 +48,87 @@ class _HomePageState extends State<HomePage>
       appBar: AppBar(
           title: Text(widget.title)
       ),
+
       body: SingleChildScrollView (
         scrollDirection: Axis.vertical,
         child : Column(
           children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row (
-                children: List.generate(16, (idx) => CircleAvatar(
-                    child : Text(idx.toString())
-                  )
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      "Comment allez-vous ?",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  ),
                 ),
-              )
+              ],
             ),
-            Container(
-              color: Colors.green,
-              height: 54,
+            Row (
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                    child: Slider(
+                      value: _current,
+                      onChanged: (newValue) => {
+                        setState(() {_current = newValue;
+                        })},
+                      min: _min,
+                      max: _max,
+                      divisions: 6,
+                    )
+                ),
+                Text("${_current.toInt()} / ${_max.toInt()}")
+              ],
             ),
-            Container(
-              color: Colors.orange,
-              height: 540,
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                          "Combien d'heures avez-vous dormi cette nuit ?",
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ),
+                ),
+              ],
             ),
-            Container(
-              color: Colors.yellow,
-              height: 54,
+            Row (
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                    child: Slider(
+                      value: _current_nuit_h,
+                      onChanged: (newValue) => {
+                        setState(() {_current_nuit_h = newValue;
+                        })},
+                      min: _min_nuit_h,
+                      max: _max_nuit_h,
+                      divisions: 28,
+                    )
+                ),
+                Text("${_current_nuit_h.toStringAsFixed(1)} / ${_max_nuit_h.toInt()}")
+              ],
             ),
-            Container(
-              color: Colors.greenAccent,
-              height: 54,
-            ),
-            Container(
-              color: Colors.redAccent,
-              height: 54,
-            ),
-            Container(
-              color: Colors.brown,
-              height: 128,
-            ),
+            Row (
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(child:
+                  TextFormField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                          label: Text(_controller.text),
+                      ),
+                    ),
+                  )
+                ]
+            )
           ],
-
         )
       )
     );
