@@ -26,52 +26,49 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      backgroundColor: isOn ? Colors.lightGreenAccent : Colors.blueGrey,
-
-      body: Center (
+    return Scaffold( backgroundColor: Colors.blue,
+      appBar: AppBar(
+          title: Text(widget.title)
+      ),
+      body: SingleChildScrollView (
+        scrollDirection: Axis.vertical,
         child : Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Valeur du switch :${isOn ? "green" : "blue"}"),
-                Switch(
-                  value: isOn,
-                  onChanged: (newBool){
-                    setState(() {isOn = newBool;})
-                    ;},
-                )
-              ],
-            ),
-            Row (
-              mainAxisAlignment: MainAxisAlignment.center,
-              children : [
-                Text("${_current.toInt()} / 6")
-              ]
-            ),
-            Row (
-              children : [
-                Text (_min.toString()),
-                Expanded(
-                    child : Slider(
-                        divisions: 6,
-                        min: _min,
-                        max: _max,
-                        value: _current,
-                        onChanged: (newValue) {
-                          setState(() {
-                            _current = newValue;
-                          });
-                        }
-                    )
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row (
+                children: List.generate(16, (idx) => CircleAvatar(
+                    child : Text(idx.toString())
+                  )
                 ),
-                Text (_max.toString()),
-              ],
+              )
+            ),
+            Container(
+              color: Colors.green,
+              height: 54,
+            ),
+            Container(
+              color: Colors.orange,
+              height: 540,
+            ),
+            Container(
+              color: Colors.yellow,
+              height: 54,
+            ),
+            Container(
+              color: Colors.greenAccent,
+              height: 54,
+            ),
+            Container(
+              color: Colors.redAccent,
+              height: 54,
+            ),
+            Container(
+              color: Colors.brown,
+              height: 128,
             ),
           ],
+
         )
       )
     );

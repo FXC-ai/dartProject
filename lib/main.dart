@@ -3,7 +3,7 @@ import "demo_poo.dart";
 import 'home_page.dart';
 
 void main() {
-  runApp(const MyApp(appTitle : "titre ..."));
+  runApp(const MyApp(appTitle : "metEOEveil"));
 }
 
 class MyApp extends StatelessWidget {
