@@ -17,76 +17,89 @@ class HomePage extends StatefulWidget
 
 class _HomePageState extends State<HomePage>
 {
-  List<String> values = ["poire", "pêche", "cerise", "framboise"];
-  String _selected = "";
+  String _simple = "";
+  String _afterSubmit = "";
 
-  final List<Animal> _animaux = [
-    Animal("chat", "cat"),
-    Animal("baleine", "whale"),
-    Animal("chien", "dog"),
-  ];
+  final FocusNode _focus = FocusNode(); // cette fonction sert à mettre le focus sur un node
+  final FocusNode _next = FocusNode();
 
-  late Set<Animal> _selection;
-
-  @override
-  void initState()
+  void unfocus (FocusNode focusNode)
   {
-    super.initState();
-    _selection = {_animaux[0]};
+    focusNode.unfocus();
   }
+
+  //@override
+  //void initState()
+  //{
+  //  super.initState();
+  //}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        actions: [
-          PopupMenuButton<String>(
-            onSelected: (newValue)
-              {
-                setState(() {
-                  _selected = newValue;
-                });
-              },
-            itemBuilder: (context) {
-              return values.map((ani) {return PopupMenuItem<String>(
-                  value : ani,
-                  child: Text(ani));}
-              ).toList();
-            }
-          )
-        ],
+
       ),
 
       backgroundColor: Colors.lightGreenAccent,
 
-      body: Center(
-        child: Column (
-          children : [
-            Text(_selected),
-            SegmentedButton<Animal>(
-              segments: _animaux.map((animal){
-                return ButtonSegment<Animal>(value: animal, label: Text(animal.name));
-              }).toList(),
-              selected: _selection,
-              onSelectionChanged: (newSet){
-                setState(() {
-                  _selection = newSet;
-                });
-              },
-            ),
-            Text("animal : ${_selection.first.name}")
-          ]
+      body: InkWell(
+
+        onTap: () {
+          unfocus(_focus); // chaque fois que je clique sur le body cela enleve le focus
+        },
+        child: Center(
+          child: Column (
+            children: [
+              Text("Text field simple : $_simple"),
+              Text("After submit : $_afterSubmit"),
+              Row(
+                children: [
+                  Expanded(
+                    child:
+
+                    TextField(
+                      focusNode: _focus,
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.number,
+                      onChanged: (newStr)
+                      {
+                        setState(() {
+                          _simple = newStr;
+                        });
+                      },
+                      onSubmitted: (newStr)
+                      {
+                        setState(() {
+                          _afterSubmit = newStr;
+                        });
+                      },
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: (){FocusScope.of(context).requestFocus(_next);},
+                      icon: const Icon(Icons.icecream)
+                  )
+                ],
+              ),
+                    const SizedBox(height: 24),
+                    Padding(
+                        padding: const EdgeInsets.all(8),
+                        child : TextField(
+                            focusNode: _next,
+                            decoration: InputDecoration(
+                              border : OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(42),
+                              )
+                            ),
+                        ),
+                    ),
+            ],
+          ),
         ),
       )
     );
   }
 }
 
-class Animal {
-  String name;
-  String icon;
-
-  Animal(this.name, this.icon);
-
-}
