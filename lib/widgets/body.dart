@@ -1,20 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tuto/home_page.dart';
 
-class HistoryPage extends StatefulWidget
-{
-  const HistoryPage ({super.key});
+class Body extends StatefulWidget {
+  const Body({super.key});
 
   @override
-  State<HistoryPage> createState() {
-    return _HistoryPageState();
+  State<Body> createState(){
+    return _BodyState();
   }
-
-
 }
 
-class _HistoryPageState extends State<HistoryPage>
+class _BodyState extends State<Body>
 {
 
   IconData _iconData = Icons.person;
@@ -23,7 +19,7 @@ class _HistoryPageState extends State<HistoryPage>
   void _showSnackBar()
   {
     SnackBar snb = SnackBar(
-        content: Text("SnackBar"),
+      content: Text("SnackBar"),
       backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       elevation: 5,
       margin: const EdgeInsets.all(8),
@@ -71,13 +67,13 @@ class _HistoryPageState extends State<HistoryPage>
   TextButton _bottomSheetButton({required String colorStr, required Color color })
   {
     return TextButton(
-        onPressed: () => {
-          setState(() {
-            _colorButton = color;
-            Navigator.pop(context);
-          })
-        },
-        child: Text(colorStr),
+      onPressed: () => {
+        setState(() {
+          _colorButton = color;
+          Navigator.pop(context);
+        })
+      },
+      child: Text(colorStr),
     );
   }
 
@@ -96,60 +92,44 @@ class _HistoryPageState extends State<HistoryPage>
   }
 
   @override
-  Widget build (BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("data"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              onPressed: _showSnackBar,
-              child: const Text("Elevated Button for SnackBar"),
-            ),
-            ElevatedButton(
-                onPressed: _simpleDialog,
-                child: const Text("Elevated Button for Alert Dialog")
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: _colorButton,
-              ),
-              onPressed: ()
-              {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Container(
+  Widget build(BuildContext context)
+  {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton(
+            onPressed: _showSnackBar,
+            child: const Text("Elevated Button for SnackBar"),
+          ),
+          ElevatedButton(
+              onPressed: _simpleDialog,
+              child: const Text("Elevated Button for Alert Dialog")
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: _colorButton),
+            onPressed: ()
+            {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Container(
                         height: 200,
                         width: MediaQuery.of(context).size.width,
                         child: bottom()
-                      );
-                    }
-                );
-              },
-              child: const Text("Bottom Sheet"),
-            ),
-            ElevatedButton(
-                onPressed: (){
-                  Scaffold.of(context).showBottomSheet((BuildContext context)
-                  {
-                    return bottom();
-                  });
-                },
-                child: const Text ("Persistante")
-            ),
-            Icon(_iconData),
-          ],
-
-        ),
-
+                    );
+                  }
+              );
+            },
+            child: const Text("Bottom Sheet"),
+          ),
+          ElevatedButton(
+              onPressed: (){Scaffold.of(context).showBottomSheet((BuildContext context) {return bottom();});},
+              child: const Text ("Persistante")
+          ),
+          Icon(_iconData),
+        ],
       ),
     );
-    throw UnimplementedError();
   }
-
-
 }

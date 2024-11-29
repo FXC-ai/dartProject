@@ -5,9 +5,10 @@ import "package:flutter/material.dart";
 class HomePage extends StatefulWidget
 {
   final String title; // Attribut
+  final String name;
 
 
-  const HomePage ({super.key, required this.title}); // Constructeur
+  const HomePage ({super.key, required this.title, required this.name}); // Constructeur
 
   @override
   State<HomePage> createState ()
@@ -22,7 +23,6 @@ class _HomePageState extends State<HomePage>
   YesNo? _yesOrNo;
   final _focus = FocusNode();
   final _formKey = GlobalKey<FormState>();
-
   static double _scale_min = 0;
   static double _scale_max = 5;
 
@@ -77,21 +77,16 @@ class _HomePageState extends State<HomePage>
 
   late TextEditingController _controller;
 
-  void unfocusMethod1(FocusNode focusNode)
-  {
-    // FocusScope.of(context).requestFocus(FocusNode());
-    focusNode.unfocus();
+  void unfocusMethod1(FocusNode focusNode) {focusNode.unfocus();}
 
-    // print(_focus.toString());
-    // print("CALL CALL CALL\n\n\n\n\n");
-  }
-
+  late String _name;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _controller = TextEditingController(text : "Il faut un jour peut etre ecore...");
+
   }
 
   @override
@@ -121,8 +116,8 @@ class _HomePageState extends State<HomePage>
                         child: Column (
                           children: [
 
-                            const Text(
-                              "Ces dernieres 24 heures ...",
+                            Text(
+                              "Ces dernieres 24 heures ... ${widget.name}",
                               style: TextStyle(fontSize: 18, color: Colors.white),
                             ),
                             const Divider(height: 5.0, color: Colors.black),
@@ -305,7 +300,8 @@ class _HomePageState extends State<HomePage>
                                 }
                               },
                               child: const Text("Valider"),
-                            )
+                            ),
+
                           ],
                         )
                     ),
