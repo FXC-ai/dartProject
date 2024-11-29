@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tuto/history_page.dart';
 import "demo_poo.dart";
 import 'home_page.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(const MyApp(appTitle : "metEOEveil"));
@@ -15,29 +17,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter test',
-      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), useMaterial3: true,),
-      home: HomePage(title: appTitle),
+      title: 'met EOE veil',
+      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal ), useMaterial3: true,),
+      home: const HistoryPage(),
+      // home: HomePage(title: appTitle),
     );
   }
 }
 
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar : AppBar (title: Text(title)),
-      body: Center(
-        child: Image.asset("assets/avatar.jpg"),
-      ),
-      bottomNavigationBar: Text("Ici c'est le bottom navigation bar"),
-    );
-  }
 
-}
+
 
 

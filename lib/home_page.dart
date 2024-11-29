@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage>
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller = TextEditingController(text : "A noter que...");
+    _controller = TextEditingController(text : "Il faut un jour peut etre ecore...");
   }
 
   @override
@@ -274,9 +274,30 @@ class _HomePageState extends State<HomePage>
                                   print(_currentQ2);
                                   print(_currentQ3);
                                   print(_controller.text);
+
                                   showDialog(
                                       context: context,
-                                      builder: (context) {return AlertDialog(content: Text(_controller.text));}
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return   AlertDialog(
+                                          content: Text("Etes-vous sure de ces informations ?"),
+                                          title: const Text("Vérification du formulaire"),
+                                          actions: [
+                                            TextButton(
+                                                child: const Text("Valider"),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+
+                                            ),
+                                            TextButton(
+                                              child: const Text("Annuler"),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            )
+                                          ],
+                                      );}
                                   );
                                 }
                                 else {
