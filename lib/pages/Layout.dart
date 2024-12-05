@@ -6,8 +6,20 @@ import 'package:tuto/widgets/Questions.dart';
 import '../model/tabs.dart';
 import '../widgets/History.dart';
 
-class Layout extends StatelessWidget {
-  Layout({super.key});
+class Layout extends StatefulWidget {
+  const Layout({super.key});
+
+  @override
+  State<StatefulWidget> createState ()
+  {
+    return LayoutState();
+  }
+}
+
+class LayoutState extends State<Layout>
+{
+
+  int _index = 0;
 
   final List<Tabs> _tabs = [
     Tabs(name: "Home", iconData: Icons.home, widget: const Home()),
@@ -22,22 +34,33 @@ class Layout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: _tabs.length,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text("MetEOEveil"),
-            bottom: TabBar(
-              indicatorColor: Colors.deepPurpleAccent,
-              labelColor: Colors.blue,
-              unselectedLabelColor: Colors.brown,
-              tabs: _tabs.map((t) => t.tab).toList(),
-            ),
-          ),
-          body: TabBarView(
-            children: _tabs.map((t) => t.widget).toList(),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Met EOE veiL"),
+        centerTitle: true,
+        backgroundColor: Colors.deepPurpleAccent,
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            DrawerHeader(child: const Text("Menu")),
+            Column(
+              children: _tabs.map((t)  {return TextButton(
+                  onPressed: (){
+                    setState(() {
+                      Navigator.pop(context);
+                      _index = _tabs.indexOf(t);
+                    });
+                  },
+                  child: Text(t.name));}).toList(),
+            )
+
+          ],
         )
+
+
+      ),
+      body: _tabs[_index].widget,
     );
   }
 }
