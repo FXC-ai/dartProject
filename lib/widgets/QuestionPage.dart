@@ -2,22 +2,22 @@ import "dart:math";
 
 import "package:flutter/material.dart";
 
-class HomePage extends StatefulWidget
+class QuestionPage extends StatefulWidget
 {
   final String title; // Attribut
   final String name;
 
 
-  const HomePage ({super.key, required this.title, required this.name}); // Constructeur
+  const QuestionPage ({super.key, required this.title, required this.name}); // Constructeur
 
   @override
-  State<HomePage> createState ()
+  State<QuestionPage> createState ()
   {
     return _HomePageState();
   }
 }
 
-class _HomePageState extends State<HomePage>
+class _HomePageState extends State<QuestionPage>
 {
 
   YesNo? _yesOrNo;
@@ -86,7 +86,6 @@ class _HomePageState extends State<HomePage>
     // TODO: implement initState
     super.initState();
     _controller = TextEditingController(text : "Il faut un jour peut etre ecore...");
-
   }
 
   @override
@@ -136,8 +135,6 @@ class _HomePageState extends State<HomePage>
                             ),
                             Text("${_currentQ0.toInt()} / ${_scale_max.toInt()}"),
                             Text(" ${_stressLevel[_currentQ0.toInt()]}"),
-
-
 
                             const Text(
                               "Quel a été ton niveau d'energie global ?",

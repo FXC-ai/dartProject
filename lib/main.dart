@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tuto/pages/WelcomePage.dart';
 import 'package:tuto/pages/history_page.dart';
 import "demo_poo.dart";
-import 'pages/home_page.dart';
+import 'widgets/QuestionPage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {

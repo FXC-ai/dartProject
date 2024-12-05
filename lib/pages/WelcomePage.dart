@@ -1,61 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tuto/pages/history_page.dart';
-import 'package:tuto/pages/home_page.dart';
+import 'package:tuto/widgets/QuestionPage.dart';
 
-class WelcomePage extends StatelessWidget
-{
+import '../widgets/body.dart';
+
+class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
 
+  final List<Widget> _bodies = const [
+    Body(),
+    HistoryPage(),
+    QuestionPage(title: "Suivi charge de travail", name: "Claude")
+  ];
+
   @override
-  Widget build(BuildContext context)
-  {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Welcome"),
-      ),
-      body: Center(
-        child :
-            Column(
-              children: [
-                TextField(
-                  decoration: const InputDecoration(
-                    hintText: "Entrez votre nom",
-                    border: OutlineInputBorder()
-                  ),
-                  onSubmitted: (name){
-                    Navigator.push(context, MaterialPageRoute(builder: (ctx) {
-
-                      return HomePage(title: name, name: name);
-
-
-                    }));
-                    
-                    
-                  },
-                ),
-                TextButton(
-                    onPressed: ()
-                    {
-                      MaterialPageRoute route = MaterialPageRoute(builder: (BuildContext context) {return const HistoryPage();});
-                      Navigator.of(context).push(route);
-
-                    },
-                    child: Text("Historique")
-                ),
-                TextButton(
-                    onPressed: ()
-                    {
-                      MaterialPageRoute route = MaterialPageRoute(builder: (BuildContext context) {return const HomePage(title: "Questionnaire", name: "FX");});
-                      Navigator.of(context).push(route);
-
-                    },
-                    child: Text("Questionnaire")
-                )
-              ],
-            )
-      )
-    );
-
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+        length: 3,
+        child: Scaffold(
+            appBar: AppBar(
+              title: const Text("Welcome"),
+              bottom: const TabBar(
+                  tabs: [
+                    Tab(icon: Icon(Icons.home), text: "Home"),
+                    Tab(icon: Icon(Icons.history), text: "Historique"),
+                    Tab(icon: Icon(Icons.question_mark), text: "Questionnaire"),
+                  ]),
+            ),
+            body: TabBarView(
+                children: _bodies),
+        ));
   }
 }
