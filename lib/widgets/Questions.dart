@@ -2,22 +2,26 @@ import "dart:math";
 
 import "package:flutter/material.dart";
 
-class QuestionPage extends StatefulWidget
+class Questions extends StatefulWidget
 {
   final String title; // Attribut
   final String name;
 
 
-  const QuestionPage ({super.key, required this.title, required this.name}); // Constructeur
+  const Questions ({super.key, required this.title, required this.name}); // Constructeur
 
   @override
-  State<QuestionPage> createState ()
+  State<Questions> createState ()
   {
     return _HomePageState();
   }
 }
-
-class _HomePageState extends State<QuestionPage>
+enum YesNo
+{
+  oui,
+  non
+}
+class _HomePageState extends State<Questions>
 {
 
   YesNo? _yesOrNo;
@@ -85,7 +89,7 @@ class _HomePageState extends State<QuestionPage>
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller = TextEditingController(text : "Il faut un jour peut etre ecore...");
+    _controller = TextEditingController(text : "Il faue...");
   }
 
   @override
@@ -96,14 +100,9 @@ class _HomePageState extends State<QuestionPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( backgroundColor: Colors.blue,
-      appBar: AppBar(
-          title: Text(widget.title)
-      ),
-
-      body: InkWell(
+    return InkWell(
         onTap: (){unfocusMethod1(_focus);},
-        child:       SingleChildScrollView (
+        child: SingleChildScrollView (
             scrollDirection: Axis.vertical,
             child : Column(
               children: [
@@ -117,12 +116,12 @@ class _HomePageState extends State<QuestionPage>
 
                             Text(
                               "Ces dernieres 24 heures ... ${widget.name}",
-                              style: TextStyle(fontSize: 18, color: Colors.white),
+                              style: TextStyle(fontSize: 18, color: Colors.deepPurple),
                             ),
                             const Divider(height: 5.0, color: Colors.black),
                             const Text(
                               "Quel a été ton niveau de stress ?",
-                              style: TextStyle(fontSize: 18, color: Colors.white),
+                              style: TextStyle(fontSize: 18, color: Colors.deepPurpleAccent),
                             ),
                             Slider(
                               value: _currentQ0,
@@ -138,7 +137,7 @@ class _HomePageState extends State<QuestionPage>
 
                             const Text(
                               "Quel a été ton niveau d'energie global ?",
-                              style: TextStyle(fontSize: 18, color: Colors.white),
+                              style: TextStyle(fontSize: 18, color: Colors.blueGrey),
                             ),
                             Slider(
                               value: _currentQ1,
@@ -154,7 +153,7 @@ class _HomePageState extends State<QuestionPage>
 
                             const Text(
                               "As tu ressenti du plaisir, de la satisfaction ?",
-                              style: TextStyle(fontSize: 18, color: Colors.white),
+                              style: TextStyle(fontSize: 18, color: Colors.green),
                             ),
                             Slider(
                               value: _currentQ2,
@@ -171,7 +170,7 @@ class _HomePageState extends State<QuestionPage>
                               padding: EdgeInsets.symmetric(horizontal: 16.0),
                               child : Text(
                                 "A quel point te sens-tu connecté(e) aux autres aujourd'hui ?",
-                                style: TextStyle(fontSize: 18, color: Colors.white),
+                                style: TextStyle(fontSize: 18, color: Colors.yellow),
                               ),
                             ),
 
@@ -191,7 +190,7 @@ class _HomePageState extends State<QuestionPage>
                               padding: EdgeInsets.symmetric(horizontal: 16.0),
                               child : Text(
                                 "Avez-vous ressenti une anxiété qui vous a empêché de faire des choses ?",
-                                style: TextStyle(fontSize: 18, color: Colors.white),
+                                style: TextStyle(fontSize: 18, color: Colors.pinkAccent),
                               ),
                             ),
 
@@ -220,10 +219,9 @@ class _HomePageState extends State<QuestionPage>
                               padding: EdgeInsets.symmetric(horizontal: 16.0),
                               child : Text(
                                 "Y a-t-il quelque chose de particulier dont tu aimerais parler ou que tu as sur le cœur aujourd'hui ?",
-                                style: TextStyle(fontSize: 18, color: Colors.white),
+                                style: TextStyle(fontSize: 18, color: Colors.brown),
                               ),
                             ),
-
 
                             Container(
                               margin: EdgeInsets.all(16.0),
@@ -308,14 +306,9 @@ class _HomePageState extends State<QuestionPage>
               ],
             )
         )
-      )
     );
   }
 }
 
-enum YesNo
-{
-  oui,
-  non
-}
+
 

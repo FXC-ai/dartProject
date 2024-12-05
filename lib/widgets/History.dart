@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Body extends StatefulWidget {
-  const Body({super.key});
+class History extends StatefulWidget {
+  const History({super.key});
 
   @override
-  State<Body> createState(){
-    return _BodyState();
+  State<History> createState(){
+    return _HistoryState();
   }
 }
 
-class _BodyState extends State<Body>
+class _HistoryState extends State<History>
 {
 
   IconData _iconData = Icons.person;
