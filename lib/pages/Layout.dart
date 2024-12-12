@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tuto/widgets/Fornulaire.dart';
+import 'package:tuto/widgets/Formulaire.dart';
 import 'package:tuto/widgets/Home.dart';
 import 'package:tuto/widgets/Questions.dart';
 

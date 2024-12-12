@@ -40,26 +40,26 @@ class DatabaseClient {
   onCreate (Database database, int version) async {
     await database.execute('''
       CREATE TABLE answersQuestions (
-      id INTEGER PRIMARY,
+      id INTEGER PRIMARY KEY,
       date TEXT NOT NULL,
       referent_id INTEGER NOT NULL,
       participant_id INTEGER NOT NULL,
-      charge_m INTEGER NOT NULL,
+      charge_m INTEGER NOT NULL
       )
-    ''');
+      ''');
 
     await database.execute('''
       CREATE TABLE listParticipants (
-      id INTEGER PRIMARY,
+      id INTEGER PRIMARY KEY,
       fname TEXT NOT NULL,
       lname TEXT NOT NULL,
-      referent_id INTEGER NOT NULL,
+      referent_id INTEGER NOT NULL
       )
     ''');
 
     await database.execute('''
       CREATE TABLE listReferents (
-      id INTEGER PRIMARY,
+      id INTEGER PRIMARY KEY,
       fname TEXT NOT NULL,
       lname TEXT NOT NULL,
       login TEXT NOT NULL,
@@ -73,6 +73,16 @@ class DatabaseClient {
     Database db = await database;
     const query = 'SELECT * FROM listParticipants';
     List<Map<String, dynamic>> mapList = await db.rawQuery(query);
+    print("ICICICICICICIICICIICICICICI ${mapList.map((map) => Participant.fromMap(map)).toList()[1].lname}");
     return mapList.map((map) => Participant.fromMap(map)).toList();
   }
+
+  Future<bool> addParticipant (String fname) async {
+    Database db = await database;
+    await db.insert('listParticipants', {"fname" : fname, "lname" : "test", "referent_id" : 42});
+    return true;
+
+
+  }
+
 }
