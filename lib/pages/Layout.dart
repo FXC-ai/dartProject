@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tuto/widgets/Fornulaire.dart';
 import 'package:tuto/widgets/Home.dart';
 import 'package:tuto/widgets/Questions.dart';
 
@@ -30,6 +31,8 @@ class LayoutState extends State<Layout>
         iconData: Icons.question_mark,
         widget: const Questions(
             title: "Suivi charge mental au travail", name: "Référent mesure")),
+    Tabs(name: "Formulaire", iconData: Icons.question_answer, widget: const Formulaire(title: "Evaluation charge mental par participant", name: "Pour moi")),
+
   ];
 
   @override

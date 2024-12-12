@@ -6,6 +6,7 @@ import 'widgets/Questions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp(appTitle : "metEOEveil"));
 }
 
