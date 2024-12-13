@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:tuto/model/answersQuestions.dart';
 import 'package:tuto/model/participant.dart';
 
 class DatabaseClient {
@@ -73,7 +74,7 @@ class DatabaseClient {
     Database db = await database;
     const query = 'SELECT * FROM listParticipants';
     List<Map<String, dynamic>> mapList = await db.rawQuery(query);
-    print("ICICICICICICIICICIICICICICI ${mapList.map((map) => Participant.fromMap(map)).toList()[1].lname}");
+    print("ALL PARTICIPANTS = ${mapList.map((map) => Participant.fromMap(map)).toList()[1].lname}");
     return mapList.map((map) => Participant.fromMap(map)).toList();
   }
 
@@ -81,8 +82,24 @@ class DatabaseClient {
     Database db = await database;
     await db.insert('listParticipants', {"fname" : fname, "lname" : "test", "referent_id" : 42});
     return true;
-
-
   }
+
+  Future<List<AnswerQuestion>> allAnswers() async
+  {
+    Database db = await database;
+    const query = 'SELECT * FROM answersQuestions';
+    List<Map<String, dynamic>> mapList = await db.rawQuery(query);
+    List<AnswerQuestion> result = mapList.map((map) => AnswerQuestion.fromMap(map)).toList();
+    print("ALL ANSWERS = ${result.length}");
+    return result;
+  }
+
+  Future<bool> addAnswerQuestion (int charge) async
+  {
+    Database db = await database;
+    await db.insert('AnswersQuestions', {"date" : "13122024", "referent_id" : 1, "participant_id" : 42, "charge_m" : charge});
+    return true;
+  }
+
 
 }

@@ -2,6 +2,7 @@ import "dart:math";
 
 import "package:flutter/material.dart";
 import "package:tuto/Services/DatabaseClient.dart";
+import "package:tuto/model/answersQuestions.dart";
 import "package:tuto/model/participant.dart";
 import "package:tuto/widgets/ParticipantListTile.dart";
 import "package:tuto/widgets/customAppBar.dart";
@@ -26,13 +27,16 @@ class Formulaire extends StatefulWidget
 class _FormulaireState extends State<Formulaire>
 {
 
+  final _formKey = GlobalKey<FormState>();
   List<Participant> participants = [];
+  List<AnswerQuestion> answers = [];
+  double _valueQ = 0.0;
 
   @override
   void initState() {
     // TODO: implement initState
-    getParticipantList();
-    print("LISTE DES PARTICIPANTS = ${participants}");
+    getAnswersList();
+    print("LISTE DES REPONSES = ${answers.length}\n");
     super.initState();
   }
 
@@ -43,29 +47,46 @@ class _FormulaireState extends State<Formulaire>
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Text("Nouveau Formulaire : ${participants.length} participants."),
-        //  Expanded(
-       //     child: ListView.separated(
-       //       itemBuilder: (context, index) {
-         //       final participant = participants[index];
-       //         return ParticipantListTile(
-        //          participant: participant,
-        //          onPressed: onListPressed(participant),
-        //          onDelete: onDeleteParticipant(participant),
-        //        );
-        //      },
-        //      separatorBuilder: (context, index) => const Divider(),
-        //      itemCount: participants.length,
-        //    ),
-        //  ),
-          CustomAppBar(title_str: "Ajouter un participant", buttonTitle: "+", callback: addParticipant)
+    return Column(
+      children : [
+        Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              const Text("Albert II de Monaco"),
+              Slider(
+                value: _valueQ,
+                onChanged: (newValue) => {
+                    setState(() {_valueQ = newValue;
+                  })},
+                min: 0,
+                max: 5,
+                divisions: 5,
+              ),
+              ElevatedButton(
+                onPressed: (() { DatabaseClient().addAnswerQuestion(_valueQ.toInt()).then((ok) => getAnswersList());} ),
+                child: const Text("Valider")
+              ),
+            ]
+          )
+        ),
+
+        Text("Nombre de réponse = ${answers.length}"),
+        Expanded(
+          child: ListView.separated(
+              itemBuilder: ((context, index) {
+                final answ = answers[index];
+                return Text("${answ.referent_id} | ${answ.date} | ${answ.charge_m}");
+              }
+
+              ),
+              separatorBuilder: ((context, index) => const Divider()),
+              itemCount: answers.length
+            ),
+          )
         ],
-      ),
-    );
-  }
+      );
+    }
 
   getParticipantList () async {
     final fromDb = await DatabaseClient().allParticipants();
@@ -88,7 +109,13 @@ class _FormulaireState extends State<Formulaire>
         onCancel: handleCloseDialog,
       );
     });
+  }
 
+  getAnswersList () async {
+    final fromDb = await DatabaseClient().allAnswers();
+    setState(() {
+      answers = fromDb;
+    });
   }
 
   handleCloseDialog() {

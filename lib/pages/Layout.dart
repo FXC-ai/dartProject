@@ -60,8 +60,6 @@ class LayoutState extends State<Layout>
 
           ],
         )
-
-
       ),
       body: _tabs[_index].widget,
     );
